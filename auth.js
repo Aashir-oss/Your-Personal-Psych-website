@@ -92,6 +92,22 @@ if (CLEAN_URL.indexOf("PASTE_") === 0 || CLEAN_KEY.indexOf("PASTE_") === 0) {
   }
 }
 
+/* ---------- logout (?logout=1): clear the session, then show a fresh form ----------
+   Without this, a logged-in visitor can never see the login form again —
+   the auto-redirect below would always bounce them straight to the agent. */
+if (window.location.search.indexOf("logout=1") !== -1) {
+  showOk("Logging you out…");
+  window.__authReady = true; /* don't let the watchdog fire mid-logout */
+  var cleanUrl = window.location.pathname;
+  function doneLogout() { window.location.href = cleanUrl; }
+  if (supabase && supabase.auth && supabase.auth.signOut) {
+    supabase.auth.signOut().then(doneLogout).catch(doneLogout);
+  } else {
+    doneLogout();
+  }
+  return;
+}
+
 /* ---------- userid: primary key generated at signup ----------
    Read the patient's userid from public.profiles (created by the trigger).
    Falls back to the auth id (identical value) if the row isn't readable yet. */
