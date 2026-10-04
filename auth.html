@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Log in / Sign up — Your Personal Psych</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="nav">
+    <div class="brand"><a href="index.html" style="color:inherit;text-decoration:none">🧠 <span>Your Personal Psych</span></a></div>
+    <div class="nav-links"><a class="btn btn-ghost" href="index.html">← Back</a></div>
+  </nav>
+
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <h1 id="auth-title">Welcome back</h1>
+      <p class="muted" id="auth-sub">Log in to continue your reflection.</p>
+
+      <div class="tabs">
+        <button id="tab-login" class="active" type="button">Log in</button>
+        <button id="tab-signup" type="button">Sign up</button>
+      </div>
+
+      <div class="form-err" id="form-err"></div>
+      <div class="form-ok" id="form-ok"></div>
+
+      <form id="auth-form">
+        <div class="field" id="name-field" style="display:none">
+          <label for="name">Your name</label>
+          <input id="name" type="text" placeholder="What should we call you?" autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="you@example.com" required autocomplete="email" />
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" type="password" placeholder="••••••••" required autocomplete="current-password" minlength="6" />
+        </div>
+        <button class="btn btn-primary" id="submit-btn" type="submit">Log in →</button>
+      </form>
+
+      <div class="auth-alt">
+        <a href="index.html">A self-reflection tool — not a diagnosis, not therapy.</a>
+      </div>
+      <p class="tiny-note">Umang 0311 7786264 · Rescue 1122 · <a href="https://findahelpline.org" target="_blank" rel="noopener">findahelpline.org</a></p>
+    </div>
+  </div>
+
+  <script src="supabase-js.min.js"></script>
+  <script src="config.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    /* Watchdog: if the module above failed to start (bad config.js edit,
+       blocked network import, etc.), say so instead of failing silently. */
+    setTimeout(function () {
+      if (!window.__authReady) {
+        var b = document.getElementById("form-err");
+        if (b) {
+          b.textContent = "This page did not start. Usual causes: (1) a typo in config.js — your keys must stay inside the quotation marks; (2) no internet access or esm.sh is blocked. Press F12, open the Console tab, and send a screenshot of the red errors.";
+          b.classList.add("show");
+        }
+      }
+    }, 3000);
+  </script>
+</body>
+</html>
